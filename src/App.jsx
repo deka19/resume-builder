@@ -73,8 +73,8 @@ export default function App() {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   // ⚠️ PASTE YOUR KEYS HERE ⚠️
-  const GEMINI_API_KEY = "YOUR_GEMINI_API_KEY_HERE";
-  const GOOGLE_SCRIPT_URL = "YOUR_WEB_APP_URL_HERE";
+  const GEMINI_API_KEY = "AQ.Ab8RN6LyB-qhAjD9Sb4zLPszSz5OiW1z58HWwHhAZSBYRSYp-g";
+  const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwfnbwKiW964AuxloBlbnXScAiE195UBnPIRpcCu8E0Qmkw2lTYKZ8FzMkuSSniDAefNg/exec";
 
   const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
   const nextStep = () => setStep(step + 1);
