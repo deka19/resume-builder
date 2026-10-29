@@ -18,41 +18,50 @@
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', system-ui, sans-serif; }
         body { background-color: var(--brand-light); color: var(--brand-dark); line-height: 1.5; -webkit-font-smoothing: antialiased; display: flex; flex-direction: column; min-height: 100vh; }
 
-        /* ================= MATCHED HEADER ================= */
-        .sticky-filter-wrapper {
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            background: rgba(255, 255, 255, 0.92);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+        /* ================= MATCHED HEADER & BRANDING ================= */
+        .compact-header {
+            background: #fff;
+            padding: 15px 20px;
             border-bottom: 1px solid var(--border-color);
-            box-shadow: 0 4px 20px -2px rgba(0,0,0,0.04);
-            padding: 12px 16px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 20px -2px rgba(0,0,0,0.04);
         }
         
-        @media(min-width: 768px) {
-            .sticky-filter-wrapper { padding: 16px 24px; }
-        }
-
-        .sticky-brand {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 1.15rem;
-            font-weight: 900;
-            color: var(--brand-dark);
-            text-transform: uppercase;
+        /* The exact match for the logo provided */
+        .brand-logo { 
+            font-size: 1.25rem; 
+            font-weight: 900; 
+            color: var(--brand-dark); 
+            text-transform: uppercase; 
+            text-decoration: none; 
+            display: flex; 
+            align-items: center; 
+            gap: 6px; 
+            white-space: nowrap; /* Forces a single line */
             letter-spacing: -0.5px;
-            text-decoration: none;
         }
-        .sticky-brand span { color: var(--brand-red); font-size: 0.8rem; letter-spacing: 1.5px; font-weight: 800; }
+        .brand-logo span { 
+            color: var(--brand-red); 
+            font-size: 0.9rem; 
+            letter-spacing: 1px; 
+            font-weight: 900; 
+        }
         
-        .back-link { font-size: 0.9rem; font-weight: 700; color: var(--text-muted); text-decoration: none; transition: color 0.2s; }
+        .back-link { font-size: 0.9rem; font-weight: 700; color: var(--text-muted); text-decoration: none; white-space: nowrap; transition: color 0.2s; }
         .back-link:hover { color: var(--brand-dark); }
+
+        /* Mobile scaling to prevent line breaks */
+        @media(max-width: 480px) {
+            .compact-header { padding: 12px 14px; }
+            .brand-logo { font-size: 0.95rem; gap: 4px; }
+            .brand-logo span { font-size: 0.75rem; }
+            .back-link { font-size: 0.8rem; }
+        }
 
         /* ================= LAYOUT GRID ================= */
         .builder-container {
@@ -128,7 +137,14 @@
         
         .preview-btn { background: #fff; color: var(--brand-dark); border: 2px solid var(--brand-dark); padding: 16px; border-radius: 12px; font-weight: 800; font-size: 1.05rem; cursor: pointer; transition: all 0.2s; display: flex; justify-content: center; align-items: center; gap: 10px; }
         .download-btn { background: var(--brand-dark); color: #fff; border: none; padding: 16px; border-radius: 12px; font-weight: 800; font-size: 1.05rem; cursor: pointer; transition: background 0.2s, transform 0.1s; display: flex; justify-content: center; align-items: center; gap: 10px; }
-        .wa-btn { background: var(--wa-green); color: #fff; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 10px; padding: 16px; border-radius: 12px; font-weight: 800; font-size: 1.05rem; }
+        .wa-btn { background: var(--wa-green); color: #fff; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 10px; padding: 16px; border-radius: 12px; font-weight: 800; font-size: 1.05rem; transition: transform 0.1s, background 0.2s; }
+        
+        .preview-btn:hover { background: #f3f4f6; }
+        .preview-btn:active { transform: scale(0.98); }
+        .download-btn:hover { background: #1f2937; }
+        .download-btn:active { transform: scale(0.98); }
+        .wa-btn:hover { background: var(--wa-green-hover); }
+        .wa-btn:active { transform: scale(0.98); }
 
         /* THE ATS RESUME PAPER (1:1 EXACT MATCH) */
         .resume-paper-wrapper { background: #fff; padding: 40px 50px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); border-radius: 4px; overflow-x: auto; display: none; }
@@ -150,10 +166,12 @@
         .res-section-title { font-size: 11pt; font-weight: bold; text-transform: uppercase; margin-top: 16px; margin-bottom: 8px; border-bottom: 1.5px solid #000; padding-bottom: 2px; }
         .res-text { font-size: 10.5pt; margin-bottom: 8px; text-align: justify; }
         
+        /* Skills Split */
         .comp-row { display: flex; align-items: flex-start; margin-bottom: 6px; font-size: 10.5pt; }
         .comp-cat { font-weight: bold; width: 180px; flex-shrink: 0; }
         .comp-val { flex-grow: 1; }
         
+        /* Standard ATS Harvard Structure */
         .res-item-row-1 { display: flex; justify-content: space-between; align-items: baseline; font-size: 10.5pt; margin-top: 10px; }
         .res-item-row-2 { display: flex; justify-content: space-between; align-items: baseline; font-size: 10.5pt; margin-bottom: 4px; }
         .res-company, .res-role { font-weight: bold; }
@@ -169,6 +187,7 @@
         @media(min-width: 768px) { .mini-job-grid { grid-template-columns: repeat(3, 1fr); } }
         
         .mini-card { background: #fff; border: 1px solid var(--border-color); border-radius: 12px; padding: 16px; display: flex; flex-direction: column; text-decoration: none; color: inherit; transition: box-shadow 0.2s; }
+        .mini-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.05); border-color: var(--brand-dark); }
         .mini-title { font-size: 1rem; font-weight: 800; margin-bottom: 4px; }
         .mini-salary { color: var(--brand-red); font-weight: 800; font-size: 0.95rem; margin-bottom: 10px; }
         .mini-link { font-size: 0.8rem; font-weight: 700; color: var(--brand-dark); text-transform: uppercase; margin-top: auto; }
@@ -177,8 +196,6 @@
         .site-footer { background-color: #fff; border-top: 1px solid var(--border-color); padding: 30px 20px; margin-top: auto; }
         .footer-container { max-width: 1400px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; }
         .footer-left { display: flex; flex-direction: column; gap: 8px; }
-        .footer-brand { display: flex; align-items: center; gap: 6px; font-size: 1.15rem; font-weight: 900; color: var(--brand-dark); text-transform: uppercase; letter-spacing: -0.5px; text-decoration: none;}
-        .footer-brand span { color: var(--brand-red); font-size: 0.8rem; letter-spacing: 1.5px; font-weight: 800; }
         .footer-address { font-size: 0.9rem; color: var(--text-muted); font-weight: 500; margin-top: 4px; }
         .footer-phone { font-size: 0.95rem; font-weight: 700; color: var(--brand-dark); text-decoration: none; display: inline-block; margin-top: 5px; transition: color 0.2s; }
         .footer-phone:hover { color: var(--brand-red); }
@@ -189,7 +206,6 @@
         
         @media(min-width: 768px) { 
             .footer-container { flex-direction: row; justify-content: space-between; align-items: flex-end; } 
-            .footer-brand span { margin-left: 5px; } 
             .footer-right { text-align: right; } 
         }
 
@@ -201,14 +217,14 @@
             #resumePreviewWrapper { display: block !important; padding: 0; box-shadow: none; }
             #resumePaper, #resumePaper * { visibility: visible; }
             #resumePaper { position: absolute; left: 0; top: 0; width: 100%; max-width: 100%; margin: 0; padding: 0; }
-            .sticky-filter-wrapper, .form-panel, .action-card, .upsell-section, footer { display: none !important; }
+            .compact-header, .form-panel, .action-card, .upsell-section, footer { display: none !important; }
         }
     </style>
 </head>
 <body>
 
-    <header class="sticky-filter-wrapper">
-        <a href="index.html" class="sticky-brand">Free Job Interviews <span>BY SWABHI</span></a>
+    <header class="compact-header">
+        <a href="index.html" class="brand-logo">FREE JOB INTERVIEWS <span>BY SWABHI</span></a>
         <a href="index.html" class="back-link">← Back to Jobs</a>
     </header>
 
@@ -349,11 +365,10 @@
         </div>
     </div>
 
-    <!-- ADDED FOOTER HERE -->
     <footer class="site-footer">
         <div class="footer-container">
             <div class="footer-left">
-                <a href="index.html" class="footer-brand">Free Job Interviews <span>BY SWABHI</span></a>
+                <a href="index.html" class="brand-logo">FREE JOB INTERVIEWS <span>BY SWABHI</span></a>
                 <p class="footer-address">2nd floor, Crystal Conclave, Hem Baruah Rd, opposite to MAAC, Pan Bazaar, Guwahati, Assam 781001</p>
                 <a href="tel:+916002413305" class="footer-phone">📞 +91 60024 13305</a>
             </div>
