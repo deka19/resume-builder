@@ -72,21 +72,45 @@ export default function App() {
   const [isPolishing, setIsPolishing] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwfnbwKiW964AuxloBlbnXScAiE195UBnPIRpcCu8E0Qmkw2lTYKZ8FzMkuSSniDAefNg/exec";
+  // ⚠️ PASTE YOUR KEYS HERE ⚠️
+  const GEMINI_API_KEY = "YOUR_GEMINI_API_KEY_HERE";
+  const GOOGLE_SCRIPT_URL = "YOUR_WEB_APP_URL_HERE";
 
   const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
   const nextStep = () => setStep(step + 1);
   const prevStep = () => setStep(step - 1);
 
+  // DIRECT FRONTEND AI CALL
   const handleAiPolish = async () => {
     if (!formData.expDetails) return alert("Write some basic experience first!");
     setIsPolishing(true);
+    
     try {
-      const res = await axios.post('/api/polish', { text: formData.expDetails });
-      setFormData({ ...formData, expDetails: res.data.polishedText });
+      const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          contents: [{
+            parts: [{
+              text: `You are an expert resume writer. Turn this basic job description into two highly professional, ATS-friendly bullet points using the STAR method. Return ONLY the bullet points, no introduction or extra text.\n\nUser input: ${formData.expDetails}`
+            }]
+          }]
+        })
+      });
+
+      const data = await response.json();
+      
+      if (!response.ok) {
+        throw new Error(data.error?.message || "API Error");
+      }
+
+      const polishedText = data.candidates[0].content.parts[0].text.trim();
+      setFormData({ ...formData, expDetails: polishedText });
+      
     } catch (error) {
-      alert("AI polish failed. Check your API key setup in Vercel.");
+      alert(`AI polish failed: ${error.message}`);
     }
+    
     setIsPolishing(false);
   };
 
@@ -99,12 +123,12 @@ export default function App() {
       const url = URL.createObjectURL(blob);
       const link = document.createElement('a');
       link.href = url;
-      link.download = `${formData.fullName}_Resume.pdf`;
+      link.download = `${formData.fullName || 'Candidate'}_Resume.pdf`;
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
     } catch (error) {
-      alert("Submission failed. You can still download your resume.");
+      alert("Submission to sheet failed, but you can still download your resume.");
     }
     setIsSubmitting(false);
   };
