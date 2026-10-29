@@ -72,21 +72,21 @@ export default function App() {
   const [isPolishing, setIsPolishing] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // ⚠️ PASTE YOUR KEYS HERE ⚠️
+  // ⚠️ YOUR KEYS ARE HARDCODED HERE ⚠️
   const GEMINI_API_KEY = "AQ.Ab8RN6LyB-qhAjD9Sb4zLPszSz5OiW1z58HWwHhAZSBYRSYp-g";
   const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwfnbwKiW964AuxloBlbnXScAiE195UBnPIRpcCu8E0Qmkw2lTYKZ8FzMkuSSniDAefNg/exec";
-  
+
   const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
   const nextStep = () => setStep(step + 1);
   const prevStep = () => setStep(step - 1);
 
-  // DIRECT FRONTEND AI CALL
+  // DIRECT FRONTEND AI CALL (Updated with -latest to fix version error)
   const handleAiPolish = async () => {
     if (!formData.expDetails) return alert("Write some basic experience first!");
     setIsPolishing(true);
     
     try {
-      const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`, {
+      const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${GEMINI_API_KEY}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
