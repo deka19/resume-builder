@@ -18,69 +18,20 @@
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', system-ui, sans-serif; }
         body { background-color: var(--brand-light); color: var(--brand-dark); line-height: 1.5; -webkit-font-smoothing: antialiased; display: flex; flex-direction: column; min-height: 100vh; }
 
-        /* ================= MATCHED HEADER & BRANDING ================= */
-        .compact-header {
-            background: #fff;
-            padding: 15px 20px;
-            border-bottom: 1px solid var(--border-color);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: 0 4px 20px -2px rgba(0,0,0,0.04);
-        }
-        
-        /* The exact match for the logo provided */
-        .brand-logo { 
-            font-size: 1.25rem; 
-            font-weight: 900; 
-            color: var(--brand-dark); 
-            text-transform: uppercase; 
-            text-decoration: none; 
-            display: flex; 
-            align-items: center; 
-            gap: 6px; 
-            white-space: nowrap; /* Forces a single line */
-            letter-spacing: -0.5px;
-        }
-        .brand-logo span { 
-            color: var(--brand-red); 
-            font-size: 0.9rem; 
-            letter-spacing: 1px; 
-            font-weight: 900; 
-        }
-        
+        /* ================= COMPACT HEADER ================= */
+        .compact-header { background: #fff; padding: 15px 20px; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 20px -2px rgba(0,0,0,0.04); }
+        .brand-logo { font-size: 1.25rem; font-weight: 900; color: var(--brand-dark); text-transform: uppercase; text-decoration: none; display: flex; align-items: center; gap: 6px; white-space: nowrap; letter-spacing: -0.5px; }
+        .brand-logo span { color: var(--brand-red); font-size: 0.9rem; letter-spacing: 1px; font-weight: 900; }
         .back-link { font-size: 0.9rem; font-weight: 700; color: var(--text-muted); text-decoration: none; white-space: nowrap; transition: color 0.2s; }
         .back-link:hover { color: var(--brand-dark); }
-
-        /* Mobile scaling to prevent line breaks */
-        @media(max-width: 480px) {
-            .compact-header { padding: 12px 14px; }
-            .brand-logo { font-size: 0.95rem; gap: 4px; }
-            .brand-logo span { font-size: 0.75rem; }
-            .back-link { font-size: 0.8rem; }
-        }
+        @media(max-width: 480px) { .compact-header { padding: 12px 14px; } .brand-logo { font-size: 0.95rem; gap: 4px; } .brand-logo span { font-size: 0.75rem; } .back-link { font-size: 0.8rem; } }
 
         /* ================= LAYOUT GRID ================= */
-        .builder-container {
-            flex: 1;
-            width: 100%;
-            max-width: 1400px;
-            margin: 30px auto;
-            padding: 0 16px;
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 40px;
-        }
-        @media(min-width: 1024px) {
-            .builder-container { grid-template-columns: 550px 1fr; }
-        }
+        .builder-container { flex: 1; width: 100%; max-width: 1400px; margin: 30px auto; padding: 0 16px; display: grid; grid-template-columns: 1fr; gap: 40px; }
+        @media(min-width: 1024px) { .builder-container { grid-template-columns: 550px 1fr; } }
 
         /* ================= LEFT: WIZARD FORM ================= */
         .form-panel { background: #fff; border: 1px solid var(--border-color); border-radius: 16px; padding: 25px; box-shadow: 0 4px 12px rgba(0,0,0,0.03); max-height: calc(100vh - 120px); overflow-y: auto; display: flex; flex-direction: column; }
-        
         .form-panel::-webkit-scrollbar { width: 6px; }
         .form-panel::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
         .form-panel::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 10px; }
@@ -111,7 +62,6 @@
         
         .add-btn { background: #E5E7EB; color: var(--brand-dark); border: none; padding: 12px 15px; border-radius: 8px; font-weight: 800; font-size: 0.85rem; cursor: pointer; width: 100%; transition: background 0.2s; margin-bottom: 10px; display: flex; justify-content: center; gap: 8px; align-items: center; }
         .add-btn:hover { background: #D1D5DB; }
-        
         .add-bullet-btn { background: #fff; border: 1px dashed var(--brand-dark); color: var(--brand-dark); font-weight: 700; font-size: 0.85rem; padding: 10px; border-radius: 6px; cursor: pointer; width: 100%; margin-top: 5px; transition: background 0.2s; }
         .add-bullet-btn:hover { background: #F3F4F6; }
         
@@ -131,7 +81,6 @@
 
         /* ================= RIGHT: ACTIONS & PREVIEW ================= */
         .preview-panel { display: flex; flex-direction: column; gap: 25px; }
-        
         .action-card { background: #fff; border: 1px solid var(--border-color); border-radius: 16px; padding: 25px; box-shadow: 0 4px 12px rgba(0,0,0,0.03); display: flex; flex-direction: column; gap: 12px; }
         .action-title { font-size: 1.15rem; font-weight: 900; margin-bottom: 5px; color: var(--brand-dark); }
         
@@ -148,30 +97,20 @@
 
         /* THE ATS RESUME PAPER (1:1 EXACT MATCH) */
         .resume-paper-wrapper { background: #fff; padding: 40px 50px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); border-radius: 4px; overflow-x: auto; display: none; }
-        .resume-paper { 
-            font-family: 'Times New Roman', Times, serif; 
-            color: #000; 
-            line-height: 1.5; 
-            min-height: 800px; 
-            max-width: 850px; 
-            margin: 0 auto; 
-            text-align: left; 
-            background: #fff; 
-        }
+        .resume-paper { font-family: 'Times New Roman', Times, serif; color: #000; line-height: 1.5; min-height: 800px; max-width: 850px; margin: 0 auto; text-align: left; background: #fff; }
         
-        .res-name { font-size: 15pt; font-weight: bold; text-align: center; margin-bottom: 4px; text-transform: uppercase; }
+        .res-name { font-size: 15pt; font-weight: bold; text-align: center; margin-bottom: 2px; text-transform: uppercase; }
+        .res-target-title { font-size: 11pt; font-weight: bold; text-align: center; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 1px; color: #333; }
         .res-contact-line { text-align: center; font-size: 10.5pt; margin-bottom: 4px; }
         .res-contact-line a { color: #000; text-decoration: none; }
         
         .res-section-title { font-size: 11pt; font-weight: bold; text-transform: uppercase; margin-top: 16px; margin-bottom: 8px; border-bottom: 1.5px solid #000; padding-bottom: 2px; }
         .res-text { font-size: 10.5pt; margin-bottom: 8px; text-align: justify; }
         
-        /* Skills Split */
         .comp-row { display: flex; align-items: flex-start; margin-bottom: 6px; font-size: 10.5pt; }
         .comp-cat { font-weight: bold; width: 180px; flex-shrink: 0; }
         .comp-val { flex-grow: 1; }
         
-        /* Standard ATS Harvard Structure */
         .res-item-row-1 { display: flex; justify-content: space-between; align-items: baseline; font-size: 10.5pt; margin-top: 10px; }
         .res-item-row-2 { display: flex; justify-content: space-between; align-items: baseline; font-size: 10.5pt; margin-bottom: 4px; }
         .res-company, .res-role { font-weight: bold; }
@@ -187,7 +126,6 @@
         @media(min-width: 768px) { .mini-job-grid { grid-template-columns: repeat(3, 1fr); } }
         
         .mini-card { background: #fff; border: 1px solid var(--border-color); border-radius: 12px; padding: 16px; display: flex; flex-direction: column; text-decoration: none; color: inherit; transition: box-shadow 0.2s; }
-        .mini-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.05); border-color: var(--brand-dark); }
         .mini-title { font-size: 1rem; font-weight: 800; margin-bottom: 4px; }
         .mini-salary { color: var(--brand-red); font-weight: 800; font-size: 0.95rem; margin-bottom: 10px; }
         .mini-link { font-size: 0.8rem; font-weight: 700; color: var(--brand-dark); text-transform: uppercase; margin-top: auto; }
@@ -203,11 +141,7 @@
         .footer-nav-link { font-size: 0.95rem; font-weight: 800; color: var(--brand-dark); text-decoration: none; transition: color 0.2s; }
         .footer-nav-link:hover { color: var(--brand-red); }
         .footer-copyright { font-size: 0.85rem; color: #9CA3AF; margin-top: 5px; }
-        
-        @media(min-width: 768px) { 
-            .footer-container { flex-direction: row; justify-content: space-between; align-items: flex-end; } 
-            .footer-right { text-align: right; } 
-        }
+        @media(min-width: 768px) { .footer-container { flex-direction: row; justify-content: space-between; align-items: flex-end; } .footer-right { text-align: right; } }
 
         /* ================= PRINT CSS ================= */
         @media print {
@@ -223,9 +157,10 @@
 </head>
 <body>
 
-    <div class="sticky-filter-wrapper" id="openings">
-        <div class="sticky-brand">Free Job Interviews <span>BY SWABHI</span></div>
-    </div>
+    <header class="compact-header">
+        <a href="index.html" class="brand-logo">FREE JOB INTERVIEWS <span>BY SWABHI</span></a>
+        <a href="index.html" class="back-link">← Back to Jobs</a>
+    </header>
 
     <div class="builder-container">
         
@@ -235,20 +170,24 @@
             <h2 class="panel-title">Build Your ATS Resume</h2>
             <div class="step-indicator" id="stepCounter">Step 1 of 6</div>
             
-            <!-- STEP 1: Personal Details -->
+            <!-- STEP 1: Personal Details & Target Job -->
             <div class="form-step" id="step-1">
                 <div class="path-toggle">
                     <input type="radio" id="pathExp" name="userPath" value="exp" checked onchange="toggleUserPath()">
                     <label for="pathExp">I have work experience</label>
-                    
                     <input type="radio" id="pathFresh" name="userPath" value="fresh" onchange="toggleUserPath()">
                     <label for="pathFresh">I am a fresher / student</label>
                 </div>
                 
                 <div class="section-label">Personal Information</div>
                 <div class="form-group"><label>Full Name</label><input type="text" id="inpName" placeholder="e.g. xxxx xxxx"></div>
-                <div class="form-group"><label>Complete Address</label><input type="text" id="inpAddress" placeholder="e.g. Flat xxx, xxxx Road, xxxx, xxxx xxxxxx"></div>
                 
+                <div class="grid-2">
+                    <div class="form-group"><label>Target Job Title (Important for ATS)</label><input type="text" id="inpTargetJob" placeholder="e.g. Sales Executive / Accountant"></div>
+                    <div class="form-group"><label>Total Experience</label><input type="text" id="inpTotalExp" placeholder="e.g. 2 Years, 6 Months / Fresher"></div>
+                </div>
+
+                <div class="form-group"><label>Complete Address</label><input type="text" id="inpAddress" placeholder="e.g. Flat xxx, xxxx Road, xxxx, xxxx xxxxxx"></div>
                 <div class="grid-2">
                     <div class="form-group"><label>Phone</label><input type="tel" id="inpPhone" placeholder="e.g. +91 xxxxx xxxxx"></div>
                     <div class="form-group"><label>Email</label><input type="email" id="inpEmail" placeholder="e.g. xxxx@email.com"></div>
@@ -258,17 +197,17 @@
 
             <!-- STEP 2: Summary -->
             <div class="form-step" id="step-2">
-                <div class="section-label">Summary</div>
+                <div class="section-label">Professional Summary</div>
                 <div class="form-group">
-                    <textarea id="inpSummary" placeholder="e.g. Detail-oriented professional with experience in xxxx..."></textarea>
+                    <textarea id="inpSummary" placeholder="e.g. Detail-oriented professional with comprehensive experience in xxxx. Proven ability to ensure rigorous compliance while optimizing processes for xxxx..."></textarea>
                 </div>
             </div>
 
-            <!-- STEP 3: Core Skills -->
+            <!-- STEP 3: Core Competencies -->
             <div class="form-step" id="step-3">
-                <div class="section-label">Core Skills</div>
+                <div class="section-label">Core Competencies</div>
                 <div id="competencyContainer"></div>
-                <button class="add-btn" onclick="addCompetency()">+ Add Skill Category</button>
+                <button class="add-btn" onclick="addCompetency('', '')">+ Add Skill Category</button>
             </div>
 
             <!-- STEP 4: Experience -->
@@ -289,8 +228,159 @@
             <div class="form-step" id="step-6">
                 <div class="section-label">Languages</div>
                 <div class="form-group">
-                    <label>Languages (Press Enter for new bullet)</label>
-                    <textarea id="inpLangs" placeholder="e.g. xxxx (Fluent)&#10;xxxx (Native)" style="min-height: 80px;"></textarea>
+                    <label>Languages & Proficiency (Press Enter for new bullet)</label>
+                    <textarea id="inpLangs" placeholder="e.g. xxxx (Fluent - Professional Working Proficiency)&#10;xxxx (Native)&#10;xxxx (Conversational)" style="min-height: 80px;"></textarea>
+                </div>/* ================= RIGHT: ACTIONS & PREVIEW ================= */
+        .preview-panel { display: flex; flex-direction: column; gap: 25px; }
+        .action-card { background: #fff; border: 1px solid var(--border-color); border-radius: 16px; padding: 25px; box-shadow: 0 4px 12px rgba(0,0,0,0.03); display: flex; flex-direction: column; gap: 12px; }
+        .action-title { font-size: 1.15rem; font-weight: 900; margin-bottom: 5px; color: var(--brand-dark); }
+        
+        .preview-btn { background: #fff; color: var(--brand-dark); border: 2px solid var(--brand-dark); padding: 16px; border-radius: 12px; font-weight: 800; font-size: 1.05rem; cursor: pointer; transition: all 0.2s; display: flex; justify-content: center; align-items: center; gap: 10px; }
+        .download-btn { background: var(--brand-dark); color: #fff; border: none; padding: 16px; border-radius: 12px; font-weight: 800; font-size: 1.05rem; cursor: pointer; transition: background 0.2s, transform 0.1s; display: flex; justify-content: center; align-items: center; gap: 10px; }
+        .wa-btn { background: var(--wa-green); color: #fff; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 10px; padding: 16px; border-radius: 12px; font-weight: 800; font-size: 1.05rem; transition: transform 0.1s, background 0.2s; }
+        
+        .preview-btn:hover { background: #f3f4f6; }
+        .preview-btn:active { transform: scale(0.98); }
+        .download-btn:hover { background: #1f2937; }
+        .download-btn:active { transform: scale(0.98); }
+        .wa-btn:hover { background: var(--wa-green-hover); }
+        .wa-btn:active { transform: scale(0.98); }
+
+        /* THE ATS RESUME PAPER (1:1 EXACT MATCH) */
+        .resume-paper-wrapper { background: #fff; padding: 40px 50px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); border-radius: 4px; overflow-x: auto; display: none; }
+        .resume-paper { font-family: 'Times New Roman', Times, serif; color: #000; line-height: 1.5; min-height: 800px; max-width: 850px; margin: 0 auto; text-align: left; background: #fff; }
+        
+        .res-name { font-size: 15pt; font-weight: bold; text-align: center; margin-bottom: 2px; text-transform: uppercase; }
+        .res-target-title { font-size: 11pt; font-weight: bold; text-align: center; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 1px; color: #333; }
+        .res-contact-line { text-align: center; font-size: 10.5pt; margin-bottom: 4px; }
+        .res-contact-line a { color: #000; text-decoration: none; }
+        
+        .res-section-title { font-size: 11pt; font-weight: bold; text-transform: uppercase; margin-top: 16px; margin-bottom: 8px; border-bottom: 1.5px solid #000; padding-bottom: 2px; }
+        .res-text { font-size: 10.5pt; margin-bottom: 8px; text-align: justify; }
+        
+        .comp-row { display: flex; align-items: flex-start; margin-bottom: 6px; font-size: 10.5pt; }
+        .comp-cat { font-weight: bold; width: 180px; flex-shrink: 0; }
+        .comp-val { flex-grow: 1; }
+        
+        .res-item-row-1 { display: flex; justify-content: space-between; align-items: baseline; font-size: 10.5pt; margin-top: 10px; }
+        .res-item-row-2 { display: flex; justify-content: space-between; align-items: baseline; font-size: 10.5pt; margin-bottom: 4px; }
+        .res-company, .res-role { font-weight: bold; }
+        .res-loc, .res-date { font-weight: normal; }
+        
+        .res-bullets { padding-left: 18px; font-size: 10.5pt; margin-bottom: 12px; }
+        .res-bullets li { margin-bottom: 3px; list-style-type: disc; }
+
+        /* INSTANT JOB MATCH (UPSELL) */
+        .upsell-section { margin-top: 10px; }
+        .upsell-title { font-size: 1.25rem; font-weight: 900; margin-bottom: 15px; border-top: 1px solid var(--border-color); padding-top: 25px; }
+        .mini-job-grid { display: grid; grid-template-columns: 1fr; gap: 15px; }
+        @media(min-width: 768px) { .mini-job-grid { grid-template-columns: repeat(3, 1fr); } }
+        
+        .mini-card { background: #fff; border: 1px solid var(--border-color); border-radius: 12px; padding: 16px; display: flex; flex-direction: column; text-decoration: none; color: inherit; transition: box-shadow 0.2s; }
+        .mini-title { font-size: 1rem; font-weight: 800; margin-bottom: 4px; }
+        .mini-salary { color: var(--brand-red); font-weight: 800; font-size: 0.95rem; margin-bottom: 10px; }
+        .mini-link { font-size: 0.8rem; font-weight: 700; color: var(--brand-dark); text-transform: uppercase; margin-top: auto; }
+
+        /* ==================== FOOTER ==================== */
+        .site-footer { background-color: #fff; border-top: 1px solid var(--border-color); padding: 30px 20px; margin-top: auto; }
+        .footer-container { max-width: 1400px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; }
+        .footer-left { display: flex; flex-direction: column; gap: 8px; }
+        .footer-address { font-size: 0.9rem; color: var(--text-muted); font-weight: 500; margin-top: 4px; }
+        .footer-phone { font-size: 0.95rem; font-weight: 700; color: var(--brand-dark); text-decoration: none; display: inline-block; margin-top: 5px; transition: color 0.2s; }
+        .footer-phone:hover { color: var(--brand-red); }
+        .footer-right { display: flex; flex-direction: column; justify-content: flex-end; gap: 10px; }
+        .footer-nav-link { font-size: 0.95rem; font-weight: 800; color: var(--brand-dark); text-decoration: none; transition: color 0.2s; }
+        .footer-nav-link:hover { color: var(--brand-red); }
+        .footer-copyright { font-size: 0.85rem; color: #9CA3AF; margin-top: 5px; }
+        @media(min-width: 768px) { .footer-container { flex-direction: row; justify-content: space-between; align-items: flex-end; } .footer-right { text-align: right; } }
+
+        /* ================= PRINT CSS ================= */
+        @media print {
+            @page { margin: 1.5cm; }
+            body { background: #fff; }
+            body * { visibility: hidden; }
+            #resumePreviewWrapper { display: block !important; padding: 0; box-shadow: none; }
+            #resumePaper, #resumePaper * { visibility: visible; }
+            #resumePaper { position: absolute; left: 0; top: 0; width: 100%; max-width: 100%; margin: 0; padding: 0; }
+            .compact-header, .form-panel, .action-card, .upsell-section, footer { display: none !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="compact-header">
+        <a href="index.html" class="brand-logo">FREE JOB INTERVIEWS <span>BY SWABHI</span></a>
+        <a href="index.html" class="back-link">← Back to Jobs</a>
+    </header>
+
+    <div class="builder-container">
+        
+        <!-- LEFT: WIZARD INPUT FORM -->
+        <div class="form-panel" id="formPanel">
+            
+            <h2 class="panel-title">Build Your ATS Resume</h2>
+            <div class="step-indicator" id="stepCounter">Step 1 of 6</div>
+            
+            <!-- STEP 1: Personal Details & Target Job -->
+            <div class="form-step" id="step-1">
+                <div class="path-toggle">
+                    <input type="radio" id="pathExp" name="userPath" value="exp" checked onchange="toggleUserPath()">
+                    <label for="pathExp">I have work experience</label>
+                    <input type="radio" id="pathFresh" name="userPath" value="fresh" onchange="toggleUserPath()">
+                    <label for="pathFresh">I am a fresher / student</label>
+                </div>
+                
+                <div class="section-label">Personal Information</div>
+                <div class="form-group"><label>Full Name</label><input type="text" id="inpName" placeholder="e.g. xxxx xxxx"></div>
+                
+                <div class="grid-2">
+                    <div class="form-group"><label>Target Job Title (Important for ATS)</label><input type="text" id="inpTargetJob" placeholder="e.g. Sales Executive / Accountant"></div>
+                    <div class="form-group"><label>Total Experience</label><input type="text" id="inpTotalExp" placeholder="e.g. 2 Years, 6 Months / Fresher"></div>
+                </div>
+
+                <div class="form-group"><label>Complete Address</label><input type="text" id="inpAddress" placeholder="e.g. Flat xxx, xxxx Road, xxxx, xxxx xxxxxx"></div>
+                <div class="grid-2">
+                    <div class="form-group"><label>Phone</label><input type="tel" id="inpPhone" placeholder="e.g. +91 xxxxx xxxxx"></div>
+                    <div class="form-group"><label>Email</label><input type="email" id="inpEmail" placeholder="e.g. xxxx@email.com"></div>
+                </div>
+                <div class="form-group"><label>LinkedIn URL</label><input type="text" id="inpLink" placeholder="e.g. linkedin.com/in/xxxx"></div>
+            </div>
+
+            <!-- STEP 2: Summary -->
+            <div class="form-step" id="step-2">
+                <div class="section-label">Professional Summary</div>
+                <div class="form-group">
+                    <textarea id="inpSummary" placeholder="e.g. Detail-oriented professional with comprehensive experience in xxxx. Proven ability to ensure rigorous compliance while optimizing processes for xxxx..."></textarea>
+                </div>
+            </div>
+
+            <!-- STEP 3: Core Competencies -->
+            <div class="form-step" id="step-3">
+                <div class="section-label">Core Competencies</div>
+                <div id="competencyContainer"></div>
+                <button class="add-btn" onclick="addCompetency('', '')">+ Add Skill Category</button>
+            </div>
+
+            <!-- STEP 4: Experience -->
+            <div class="form-step" id="step-4">
+                <div class="section-label exp-section-title">Work Experience</div>
+                <div id="experienceContainer"></div>
+                <button class="add-btn" onclick="addExperience()">+ Add Experience</button>
+            </div>
+
+            <!-- STEP 5: Education -->
+            <div class="form-step" id="step-5">
+                <div class="section-label">Education</div>
+                <div id="educationContainer"></div>
+                <button class="add-btn" onclick="addEducation()">+ Add Education</button>
+            </div>
+            
+            <!-- STEP 6: Languages -->
+            <div class="form-step" id="step-6">
+                <div class="section-label">Languages</div>
+                <div class="form-group">
+                    <label>Languages & Proficiency (Press Enter for new bullet)</label>
+                    <textarea id="inpLangs" placeholder="e.g. xxxx (Fluent - Professional Working Proficiency)&#10;xxxx (Native)&#10;xxxx (Conversational)" style="min-height: 80px;"></textarea>
                 </div>
             </div>
 
@@ -306,17 +396,14 @@
             
             <div class="action-card">
                 <div class="action-title">Resume Actions</div>
-                
                 <button class="preview-btn" onclick="togglePreview()">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                     <span id="previewBtnText">Preview Resume</span>
                 </button>
-
                 <button class="download-btn" onclick="window.print(); forceSaveToDB();">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
                     Download Resume
                 </button>
-
                 <a href="https://whatsapp.com/channel/0029Vb95jUBBVJkvPuyslk3h" class="wa-btn" target="_blank">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
                     Join our WhatsApp Channel for Daily Jobs
@@ -390,7 +477,6 @@
                 el.style.display = (index + 1 === currentStep) ? 'block' : 'none';
             });
             document.getElementById('stepCounter').innerText = `Step ${currentStep} of ${totalSteps}`;
-            
             document.getElementById('btnPrev').style.visibility = currentStep === 1 ? 'hidden' : 'visible';
             
             const btnNext = document.getElementById('btnNext');
@@ -401,21 +487,8 @@
             }
         }
 
-        function nextStep() { 
-            if(currentStep < totalSteps) { 
-                currentStep++; 
-                updateStepUI(); 
-                document.getElementById('formPanel').scrollTop = 0; 
-            } 
-        }
-
-        function prevStep() { 
-            if(currentStep > 1) { 
-                currentStep--; 
-                updateStepUI(); 
-                document.getElementById('formPanel').scrollTop = 0; 
-            } 
-        }
+        function nextStep() { if(currentStep < totalSteps) { currentStep++; updateStepUI(); document.getElementById('formPanel').scrollTop = 0; } }
+        function prevStep() { if(currentStep > 1) { currentStep--; updateStepUI(); document.getElementById('formPanel').scrollTop = 0; } }
         updateStepUI();
 
         // ==========================================
@@ -435,6 +508,8 @@
             const payload = {
                 sessionId: SESSION_ID,
                 name: document.getElementById('inpName').value,
+                targetTitle: document.getElementById('inpTargetJob').value,
+                totalExp: document.getElementById('inpTotalExp').value,
                 phone: document.getElementById('inpPhone').value,
                 email: document.getElementById('inpEmail').value,
                 location: document.getElementById('inpAddress').value,
@@ -477,12 +552,12 @@
         let expIndex = 0;
         let eduIndex = 0;
 
-        function addCompetency() {
+        function addCompetency(prefillCat = "", prefillSkills = "") {
             const html = `
                 <div class="dynamic-block comp-block" id="comp-${compIndex}">
                     <button class="remove-btn" onclick="removeBlock('comp-${compIndex}')">✖</button>
-                    <div class="form-group"><label>Category</label><input type="text" class="c-cat" placeholder="e.g. xxxx Skills:"></div>
-                    <div class="form-group"><label>Skills (Pipe or Comma Separated)</label><input type="text" class="c-skills" placeholder="e.g. | xxxx, xxxx, xxxx"></div>
+                    <div class="form-group"><label>Category</label><input type="text" class="c-cat" placeholder="e.g. Core Job Skills:" value="${prefillCat}"></div>
+                    <div class="form-group"><label>Skills (Pipe or Comma Separated)</label><input type="text" class="c-skills" placeholder="e.g. | Direct Sales, Tally Prime, Team Management" value="${prefillSkills}"></div>
                 </div>`;
             document.getElementById('competencyContainer').insertAdjacentHTML('beforeend', html);
             compIndex++;
@@ -506,7 +581,7 @@
                         <div class="form-group"><label>Dates</label><input type="text" class="e-dates" placeholder="e.g. xxxx 2023 - Present"></div>
                     </div>
                     
-                    <div class="section-label" style="font-size:0.85rem; margin-top:10px; margin-bottom:10px;">Responsibilities</div>
+                    <div class="section-label" style="font-size:0.85rem; margin-top:10px; margin-bottom:10px;">Impact-Driven Bullet Points</div>
                     <div class="achievements-wrapper" id="achieve-wrap-${expIndex}"></div>
                     <button class="add-bullet-btn" onclick="addBullet(${expIndex})">+ Add Bullet Point</button>
                 </div>`;
@@ -538,19 +613,20 @@
                             <label>Degree Level</label>
                             <select class="ed-level">
                                 <option value="" disabled selected>Select Level...</option>
-                                <option value="High School">High School (10th/12th)</option>
+                                <option value="Post Graduation (PG)">Post Graduation (PG)</option>
+                                <option value="Graduation (UG)">Graduation (UG)</option>
                                 <option value="Diploma/Certification">Diploma/Certification</option>
-                                <option value="Bachelor's">Bachelor's Degree</option>
-                                <option value="Master's">Master's Degree</option>
+                                <option value="12th Standard">12th Standard</option>
+                                <option value="10th Standard">10th Standard</option>
                             </select>
                         </div>
-                        <div class="form-group"><label>Field of Study</label><input type="text" class="ed-field" placeholder="e.g. xxxx Honors"></div>
+                        <div class="form-group"><label>Field of Study / Stream</label><input type="text" class="ed-field" placeholder="e.g. Accountancy Honors / Commerce"></div>
                     </div>
                     <div class="grid-2">
-                        <div class="form-group"><label>Institution</label><input type="text" class="ed-inst" placeholder="e.g. xxxx University"></div>
-                        <div class="form-group"><label>Graduation Date</label><input type="text" class="ed-year" placeholder="e.g. xxxx 2026"></div>
+                        <div class="form-group"><label>Institution / Board</label><input type="text" class="ed-inst" placeholder="e.g. xxxx University / CBSE"></div>
+                        <div class="form-group"><label>Passing Month/Year</label><input type="text" class="ed-year" placeholder="e.g. xxxx 2026"></div>
                     </div>
-                    <div class="form-group"><label>Key Achievements (Optional)</label><textarea class="ed-bullets" placeholder="e.g. Cleared exams in first attempt..."></textarea></div>
+                    <div class="form-group"><label>Percentage / CGPA / Details (Optional)</label><textarea class="ed-bullets" placeholder="e.g. Cleared exams in first attempt / 8.5 CGPA"></textarea></div>
                 </div>`;
             document.getElementById('educationContainer').insertAdjacentHTML('beforeend', html);
             eduIndex++;
@@ -567,6 +643,9 @@
 
             // 1. Header (1:1 Exact Match)
             const name = document.getElementById('inpName').value;
+            const targetTitle = document.getElementById('inpTargetJob').value;
+            const totalExp = document.getElementById('inpTotalExp').value;
+            
             const address = document.getElementById('inpAddress').value;
             const phone = document.getElementById('inpPhone').value;
             const email = document.getElementById('inpEmail').value;
@@ -574,6 +653,14 @@
 
             let headerHTML = '';
             if (name) headerHTML += `<div class="res-name">${name}</div>`;
+            
+            // Inject Target Title and Exp right below name for ATS power
+            if (targetTitle) {
+                headerHTML += `<div class="res-target-title">${targetTitle}${totalExp ? ` | ${totalExp}` : ''}</div>`;
+            } else if (totalExp) {
+                headerHTML += `<div class="res-target-title">${totalExp}</div>`;
+            }
+
             if (address) headerHTML += `<div class="res-contact-line">${address}</div>`;
             
             let bottomLine = [];
@@ -683,8 +770,11 @@
             }
         }
 
-        // Initialize empty blocks
-        addCompetency();
+        // Initialize Core Skills mapped to Prompt Defaults
+        addCompetency("Core Job Skills:", "");
+        addCompetency("Software / Computer Skills:", "");
+        
+        // Initialize other blocks
         addExperience();
         addEducation();
         updateResume();
