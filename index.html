@@ -427,10 +427,11 @@
         function selectPath(path) {
             const isFresher = (path === 'fresh');
             
-            // Re-label headers depending on path
-            document.querySelector('.exp-section-title').innerText = isFresher ? "Projects & Internships" : "Professional Experience";
+            // Re-label headers depending on path (Wrapped in span to protect the asterisk logic!)
             document.querySelectorAll('.role-label').forEach(lbl => lbl.innerText = isFresher ? "Project Role / Position" : "Job Title");
             document.querySelectorAll('.comp-label').forEach(lbl => lbl.innerText = isFresher ? "Organization / Institution" : "Company Name");
+            
+            document.querySelector('.exp-section-title').innerText = isFresher ? "Projects & Internships" : "Professional Experience";
             document.querySelector('.exp-section-title-preview').innerText = isFresher ? "Projects & Internships" : "Professional Experience";
 
             // Handle the "Total Experience" dropdown in Step 2
@@ -585,13 +586,13 @@
                 <div class="dynamic-block exp-block" id="exp-${expIndex}">
                     <button class="remove-btn" onclick="removeBlock('exp-${expIndex}')">✖</button>
                     <div class="grid-2">
-                        <div class="form-group"><label class="comp-label">${compText}</label><input type="text" class="e-comp" placeholder="e.g. xxxx & Associates"></div>
+                        <div class="form-group"><label><span class="comp-label">${compText}</span> <span class="req-star" title="This field is mandatory to fill" onclick="alert('This field is mandatory to fill.')">*</span></label><input type="text" class="e-comp" placeholder="e.g. xxxx & Associates" required></div>
                         <div class="form-group"><label>Location</label><input type="text" class="e-loc" placeholder="e.g. xxxx, Assam"></div>
                     </div>
                     <div class="grid-2">
                         <div class="form-group">
-                            <label class="role-label">${roleText}</label>
-                            <input type="text" class="e-title" placeholder="e.g. xxxx Executive">
+                            <label><span class="role-label">${roleText}</span> <span class="req-star" title="This field is mandatory to fill" onclick="alert('This field is mandatory to fill.')">*</span></label>
+                            <input type="text" class="e-title" placeholder="e.g. xxxx Executive" required>
                             <div class="chip-group">
                                 <span class="chip" onclick="setDynamic(this, 'e-title', false)">Sales Executive</span>
                                 <span class="chip" onclick="setDynamic(this, 'e-title', false)">Accountant</span>
