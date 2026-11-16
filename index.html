@@ -119,17 +119,6 @@
         .res-bullets { padding-left: 18px; font-size: 10.5pt; margin-bottom: 12px; }
         .res-bullets li { margin-bottom: 3px; list-style-type: disc; }
 
-        /* INSTANT JOB MATCH (UPSELL) */
-        .upsell-section { margin-top: 10px; }
-        .upsell-title { font-size: 1.25rem; font-weight: 900; margin-bottom: 15px; border-top: 1px solid var(--border-color); padding-top: 25px; }
-        .mini-job-grid { display: grid; grid-template-columns: 1fr; gap: 15px; }
-        @media(min-width: 768px) { .mini-job-grid { grid-template-columns: repeat(3, 1fr); } }
-        
-        .mini-card { background: #fff; border: 1px solid var(--border-color); border-radius: 12px; padding: 16px; display: flex; flex-direction: column; text-decoration: none; color: inherit; transition: box-shadow 0.2s; }
-        .mini-title { font-size: 1rem; font-weight: 800; margin-bottom: 4px; }
-        .mini-salary { color: var(--brand-red); font-weight: 800; font-size: 0.95rem; margin-bottom: 10px; }
-        .mini-link { font-size: 0.8rem; font-weight: 700; color: var(--brand-dark); text-transform: uppercase; margin-top: auto; }
-
         /* ==================== FOOTER ==================== */
         .site-footer { background-color: #fff; border-top: 1px solid var(--border-color); padding: 30px 20px; margin-top: auto; }
         .footer-container { max-width: 1400px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; }
@@ -151,7 +140,7 @@
             #resumePreviewWrapper { display: block !important; padding: 0; box-shadow: none; }
             #resumePaper, #resumePaper * { visibility: visible; }
             #resumePaper { position: absolute; left: 0; top: 0; width: 100%; max-width: 100%; margin: 0; padding: 0; }
-            .compact-header, .form-panel, .action-card, .upsell-section, footer { display: none !important; }
+            .compact-header, .form-panel, .action-card, footer { display: none !important; }
         }
     </style>
 </head>
@@ -289,12 +278,6 @@
                 </div>
             </div>
 
-            <!-- INSTANT JOB MATCH UPSELL -->
-            <div class="upsell-section">
-                <div class="upsell-title">Ready to apply? Try these new roles:</div>
-                <div class="mini-job-grid" id="miniJobGrid">Loading latest roles...</div>
-            </div>
-
         </div>
     </div>
 
@@ -364,7 +347,6 @@
                 linkedin: document.getElementById('inpLink').value,
                 summary: document.getElementById('inpSummary').value,
                 skills: Array.from(document.querySelectorAll('.comp-block')).map(b => b.querySelector('.c-cat').value + ": " + b.querySelector('.c-skills').value).join(' | '),
-                // Collecting languages too just in case
                 languages: Array.from(document.querySelectorAll('.lang-block')).map(b => b.querySelector('.l-name').value).join(', ')
             };
 
@@ -408,7 +390,7 @@
                 <div class="dynamic-block comp-block" id="comp-${compIndex}">
                     <button class="remove-btn" onclick="removeBlock('comp-${compIndex}')">✖</button>
                     <div class="form-group"><label>Category</label><input type="text" class="c-cat" placeholder="e.g. Core Job Skills:" value="${prefillCat}"></div>
-                    <div class="form-group"><label>Skills</label><input type="text" class="c-skills" placeholder="e.g. | xxxx, xxxx, xxxx" value="${prefillSkills}"></div>
+                    <div class="form-group"><label>Skills</label><input type="text" class="c-skills" placeholder="e.g. xxxx, xxxx, xxxx" value="${prefillSkills}"></div>
                 </div>`;
             document.getElementById('competencyContainer').insertAdjacentHTML('beforeend', html);
             compIndex++;
@@ -491,7 +473,7 @@
                     <div class="grid-2">
                         <div class="form-group"><label>Language</label><input type="text" class="l-name" placeholder="e.g. English"></div>
                         <div class="form-group">
-                            <label>Proficiency Level</label>
+                            <label>Proficiency</label>
                             <select class="l-prof">
                                 <option value="" disabled selected>Select Level...</option>
                                 <option value="Native">Native</option>
@@ -556,13 +538,13 @@
                 const cat = block.querySelector('.c-cat').value;
                 const skills = block.querySelector('.c-skills').value;
                 if (cat || skills) {
-                    compHTML += `<div class="comp-row"><div class="comp-cat">${cat}</div><div class="comp-val">${skills}</div></div>`;
+                    compHTML += `<div class="comp-row"><div class="comp-cat">${cat}</div><div class="comp-val">| ${skills}</div></div>`;
                 }
             });
             document.getElementById('outSkillsList').innerHTML = compHTML;
             document.getElementById('secSkills').style.display = compHTML ? 'block' : 'none';
 
-            // 4. Experience
+            // 4. Experience (1:1 Layout Match)
             const expBlocks = document.querySelectorAll('.exp-block');
             let expHTML = '';
             expBlocks.forEach(block => {
@@ -659,50 +641,6 @@
         addLanguage();
         updateResume();
 
-        // =========================================
-        // PULL LATEST JOBS FOR THE UPSELL SECTION
-        // =========================================
-        const MAIN_SHEET_ID = "19N7jV-E8nE5OrEEFS2w5GxqlzFAS3RHER6JIv0ipDZg"; 
-        const MAIN_SHEET_JSON = `https://docs.google.com/spreadsheets/d/${MAIN_SHEET_ID}/gviz/tq?tqx=out:json&sheet=Listings`;
-
-        const getVal = (row, idx) => {
-            if (row.c && row.c[idx]) {
-                if (row.c[idx].f !== undefined && row.c[idx].f !== null) return String(row.c[idx].f);
-                if (row.c[idx].v !== undefined && row.c[idx].v !== null) return String(row.c[idx].v);
-            }
-            return "";
-        };
-
-        fetch(MAIN_SHEET_JSON)
-        .then(res => res.text())
-        .then(text => {
-            const startIdx = text.indexOf('(') + 1;
-            const endIdx = text.lastIndexOf(')');
-            const data = JSON.parse(text.substring(startIdx, endIdx));
-            
-            const validJobs = data.table.rows.map(row => ({
-                title: getVal(row, 1).trim(),
-                salary: getVal(row, 5).trim(),
-                status: getVal(row, 8).trim()
-            })).filter(job => !JSON.stringify(job).toLowerCase().includes("construction") && job.title !== "" && (job.status.toLowerCase() === "open" || job.status === ""));
-
-            const latestThree = validJobs.slice(0, 3);
-            const grid = document.getElementById("miniJobGrid");
-            grid.innerHTML = "";
-
-            latestThree.forEach(job => {
-                let mainTitle = job.title.split(/\||\n/)[0] ? job.title.split(/\||\n/)[0].trim() : 'Role';
-                let rawSal = job.salary.replace(/₹/g, '').trim();
-                let salMain = rawSal.includes('|') ? rawSal.split(/\|/)[0].trim() : rawSal.match(/^([\d,\.]+)/)?.[1] || rawSal;
-
-                grid.innerHTML += `
-                    <a href="index.html" class="mini-card">
-                        <div class="mini-title">${mainTitle}</div>
-                        ${salMain ? `<div class="mini-salary">₹ ${salMain}</div>` : ''}
-                        <div class="mini-link">Apply Now →</div>
-                    </a>`;
-            });
-        }).catch(() => document.getElementById("miniJobGrid").innerHTML = "<p>Head to our homepage to see active roles.</p>");
     </script>
 </body>
 </html>
