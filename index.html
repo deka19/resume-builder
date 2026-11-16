@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>ATS Resume Builder | Free Job Interviews by Swabhi</title>
+    <title>Resume Builder | Free Job Interviews by Swabhi</title>
     <style>
         :root {
             --brand-red: #DC2626; 
@@ -49,14 +49,14 @@
 
         .section-label { font-size: 1.05rem; font-weight: 800; color: var(--brand-red); text-transform: uppercase; margin-bottom: 15px; letter-spacing: 0.5px; border-bottom: 1px solid var(--border-color); padding-bottom: 8px;}
         
-        .form-group { margin-bottom: 16px; }
+        /* ALIGNMENT FIX FOR GRID INPUTS */
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; align-items: end; }
+        .form-group { margin-bottom: 16px; display: flex; flex-direction: column; justify-content: flex-end; }
         .form-group label { display: block; font-weight: 700; margin-bottom: 6px; font-size: 0.8rem; color: #4B5563; text-transform: uppercase; }
         .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 12px 14px; border: 1px solid #D1D5DB; border-radius: 8px; font-size: 0.95rem; outline: none; background: #fff; transition: border-color 0.15s; }
         .form-group input:focus, .form-group textarea:focus, .form-group select:focus { border-color: var(--brand-red); box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.12); }
         .form-group textarea { resize: vertical; min-height: 80px; }
         
-        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-
         .dynamic-block { background: var(--brand-light); border: 1px solid var(--border-color); padding: 20px 15px 15px; border-radius: 10px; margin-bottom: 15px; position: relative; }
         .remove-btn { position: absolute; top: 10px; right: 10px; background: none; border: none; color: var(--brand-red); font-size: 0.8rem; font-weight: bold; cursor: pointer; }
         
@@ -95,11 +95,11 @@
         .wa-btn:hover { background: var(--wa-green-hover); }
         .wa-btn:active { transform: scale(0.98); }
 
-        /* THE ATS RESUME PAPER (1:1 EXACT MATCH) */
+        /* THE RESUME PAPER (1:1 EXACT MATCH) */
         .resume-paper-wrapper { background: #fff; padding: 40px 50px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); border-radius: 4px; overflow-x: auto; display: none; }
         .resume-paper { font-family: 'Times New Roman', Times, serif; color: #000; line-height: 1.5; min-height: 800px; max-width: 850px; margin: 0 auto; text-align: left; background: #fff; }
         
-        .res-name { font-size: 15pt; font-weight: bold; text-align: center; margin-bottom: 2px; text-transform: uppercase; }
+        .res-name { font-size: 15pt; font-weight: bold; text-align: center; margin-bottom: 4px; text-transform: uppercase; }
         .res-target-title { font-size: 11pt; font-weight: bold; text-align: center; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 1px; color: #333; }
         .res-contact-line { text-align: center; font-size: 10.5pt; margin-bottom: 4px; }
         .res-contact-line a { color: #000; text-decoration: none; }
@@ -167,7 +167,7 @@
         <!-- LEFT: WIZARD INPUT FORM -->
         <div class="form-panel" id="formPanel">
             
-            <h2 class="panel-title">Build Your ATS Resume</h2>
+            <h2 class="panel-title">Build Your Resume</h2>
             <div class="step-indicator" id="stepCounter">Step 1 of 6</div>
             
             <!-- STEP 1: Personal Details & Target Job -->
@@ -183,7 +183,7 @@
                 <div class="form-group"><label>Full Name</label><input type="text" id="inpName" placeholder="e.g. xxxx xxxx"></div>
                 
                 <div class="grid-2">
-                    <div class="form-group"><label>Target Job Title (Important for ATS)</label><input type="text" id="inpTargetJob" placeholder="e.g. Sales Executive / Accountant"></div>
+                    <div class="form-group"><label>Target Job Title</label><input type="text" id="inpTargetJob" placeholder="e.g. Sales Executive / Accountant"></div>
                     <div class="form-group"><label>Total Experience</label><input type="text" id="inpTotalExp" placeholder="e.g. 2 Years, 6 Months / Fresher"></div>
                 </div>
 
@@ -227,10 +227,8 @@
             <!-- STEP 6: Languages -->
             <div class="form-step" id="step-6">
                 <div class="section-label">Languages</div>
-                <div class="form-group">
-                    <label>Languages & Proficiency (Press Enter for new bullet)</label>
-                    <textarea id="inpLangs" placeholder="e.g. xxxx (Fluent - Professional Working Proficiency)&#10;xxxx (Native)&#10;xxxx (Conversational)" style="min-height: 80px;"></textarea>
-                </div>
+                <div id="languageContainer"></div>
+                <button class="add-btn" onclick="addLanguage()">+ Add Language</button>
             </div>
 
             <!-- WIZARD NAVIGATION -->
@@ -300,6 +298,7 @@
         </div>
     </div>
 
+    <!-- FOOTER -->
     <footer class="site-footer">
         <div class="footer-container">
             <div class="footer-left">
@@ -364,7 +363,9 @@
                 location: document.getElementById('inpAddress').value,
                 linkedin: document.getElementById('inpLink').value,
                 summary: document.getElementById('inpSummary').value,
-                skills: Array.from(document.querySelectorAll('.comp-block')).map(b => b.querySelector('.c-cat').value + ": " + b.querySelector('.c-skills').value).join(' | ')
+                skills: Array.from(document.querySelectorAll('.comp-block')).map(b => b.querySelector('.c-cat').value + ": " + b.querySelector('.c-skills').value).join(' | '),
+                // Collecting languages too just in case
+                languages: Array.from(document.querySelectorAll('.lang-block')).map(b => b.querySelector('.l-name').value).join(', ')
             };
 
             if(payload.name || payload.email || payload.phone) {
@@ -400,13 +401,14 @@
         let compIndex = 0;
         let expIndex = 0;
         let eduIndex = 0;
+        let langIndex = 0;
 
         function addCompetency(prefillCat = "", prefillSkills = "") {
             const html = `
                 <div class="dynamic-block comp-block" id="comp-${compIndex}">
                     <button class="remove-btn" onclick="removeBlock('comp-${compIndex}')">✖</button>
                     <div class="form-group"><label>Category</label><input type="text" class="c-cat" placeholder="e.g. Core Job Skills:" value="${prefillCat}"></div>
-                    <div class="form-group"><label>Skills (Pipe or Comma Separated)</label><input type="text" class="c-skills" placeholder="e.g. | Direct Sales, Tally Prime, Team Management" value="${prefillSkills}"></div>
+                    <div class="form-group"><label>Skills</label><input type="text" class="c-skills" placeholder="e.g. | xxxx, xxxx, xxxx" value="${prefillSkills}"></div>
                 </div>`;
             document.getElementById('competencyContainer').insertAdjacentHTML('beforeend', html);
             compIndex++;
@@ -482,6 +484,29 @@
             updateResume();
         }
 
+        function addLanguage() {
+            const html = `
+                <div class="dynamic-block lang-block" id="lang-${langIndex}">
+                    <button class="remove-btn" onclick="removeBlock('lang-${langIndex}')">✖</button>
+                    <div class="grid-2">
+                        <div class="form-group"><label>Language</label><input type="text" class="l-name" placeholder="e.g. English"></div>
+                        <div class="form-group">
+                            <label>Proficiency Level</label>
+                            <select class="l-prof">
+                                <option value="" disabled selected>Select Level...</option>
+                                <option value="Native">Native</option>
+                                <option value="Fluent">Fluent</option>
+                                <option value="Intermediate">Intermediate</option>
+                                <option value="Basic">Basic</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>`;
+            document.getElementById('languageContainer').insertAdjacentHTML('beforeend', html);
+            langIndex++;
+            updateResume();
+        }
+
         function removeBlock(id) {
             document.getElementById(id).remove();
             updateResume();
@@ -503,7 +528,6 @@
             let headerHTML = '';
             if (name) headerHTML += `<div class="res-name">${name}</div>`;
             
-            // Inject Target Title and Exp right below name for ATS power
             if (targetTitle) {
                 headerHTML += `<div class="res-target-title">${targetTitle}${totalExp ? ` | ${totalExp}` : ''}</div>`;
             } else if (totalExp) {
@@ -538,7 +562,7 @@
             document.getElementById('outSkillsList').innerHTML = compHTML;
             document.getElementById('secSkills').style.display = compHTML ? 'block' : 'none';
 
-            // 4. Experience (1:1 Layout Match)
+            // 4. Experience
             const expBlocks = document.querySelectorAll('.exp-block');
             let expHTML = '';
             expBlocks.forEach(block => {
@@ -608,15 +632,21 @@
             document.getElementById('outEduList').innerHTML = eduHTML;
             document.getElementById('secEdu').style.display = eduHTML ? 'block' : 'none';
 
-            // 6. Languages
-            const langsText = document.getElementById('inpLangs').value;
-            if(langsText.trim()) {
-                const langBullets = langsText.split('\n').filter(l => l.trim() !== '').map(l => `<li>${l.replace(/^[•\-\*]\s*/, '').trim()}</li>`).join('');
-                document.getElementById('outLangs').innerHTML = langBullets;
-                document.getElementById('secLangs').style.display = 'block';
-            } else {
-                document.getElementById('secLangs').style.display = 'none';
-            }
+            // 6. Languages (DYNAMIC BLOCKS NOW)
+            const langBlocks = document.querySelectorAll('.lang-block');
+            let langHTML = '';
+            langBlocks.forEach(block => {
+                const name = block.querySelector('.l-name').value;
+                const prof = block.querySelector('.l-prof').value;
+                
+                if (name) {
+                    let profText = (prof && prof !== 'Select Level...') ? ` - ${prof}` : '';
+                    langHTML += `<li>${name}${profText}</li>`;
+                }
+            });
+            
+            document.getElementById('outLangs').innerHTML = langHTML;
+            document.getElementById('secLangs').style.display = langHTML ? 'block' : 'none';
         }
 
         // Initialize Core Skills mapped to Prompt Defaults
@@ -626,6 +656,7 @@
         // Initialize other blocks
         addExperience();
         addEducation();
+        addLanguage();
         updateResume();
 
         // =========================================
