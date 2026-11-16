@@ -39,17 +39,46 @@
         .form-step { display: none; animation: fadeIn 0.3s; flex-grow: 1; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
         
-        /* ================= NEW PATH SELECTION GATE ================= */
-        .path-selection-cards { display: grid; grid-template-columns: 1fr; gap: 20px; margin-top: 10px; }
-        @media(min-width: 768px) { .path-selection-cards { grid-template-columns: 1fr 1fr; } }
-        .path-card { background: #fff; border: 2px solid var(--border-color); border-radius: 12px; padding: 40px 20px; text-align: center; cursor: pointer; transition: all 0.2s; box-shadow: 0 4px 6px rgba(0,0,0,0.02); }
-        .path-card:hover { border-color: var(--brand-dark); box-shadow: 0 8px 20px rgba(0,0,0,0.06); transform: translateY(-3px); }
-        .path-icon { font-size: 3.5rem; margin-bottom: 15px; }
-        .path-title { font-size: 1.2rem; font-weight: 900; color: var(--brand-dark); margin-bottom: 8px; }
-        .path-desc { font-size: 0.95rem; color: var(--text-muted); font-weight: 500; line-height: 1.4;}
+        /* ================= PREMIUM PATH SELECTION GATE ================= */
+        .step-1-wrapper { display: flex; flex-direction: column; justify-content: center; min-height: 50vh; }
+        .welcome-header { text-align: center; margin-bottom: 30px; }
+        .welcome-header h2 { font-size: 1.8rem; font-weight: 900; color: var(--brand-dark); margin-bottom: 8px; line-height: 1.2;}
+        .welcome-header p { font-size: 1rem; color: var(--text-muted); font-weight: 500; }
+        
+        .path-selection-cards { display: flex; flex-direction: column; gap: 16px; }
+        
+        .path-card { 
+            background: #fff; 
+            border: 2px solid var(--border-color); 
+            border-radius: 12px; 
+            padding: 20px; 
+            display: flex; 
+            align-items: center; 
+            gap: 20px; 
+            cursor: pointer; 
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); 
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            text-align: left;
+        }
+        .path-card:hover, .path-card:active { 
+            border-color: var(--brand-dark); 
+            box-shadow: 0 8px 16px rgba(0,0,0,0.06); 
+            transform: translateY(-2px); 
+        }
+        .path-icon { font-size: 2.5rem; line-height: 1; }
+        .path-text { flex: 1; }
+        .path-title { font-size: 1.1rem; font-weight: 800; color: var(--brand-dark); margin-bottom: 4px; }
+        .path-desc { font-size: 0.85rem; color: var(--text-muted); font-weight: 500; line-height: 1.4;}
+
+        /* Desktop keeps them as square side-by-side cards */
+        @media(min-width: 768px) { 
+            .path-selection-cards { flex-direction: row; } 
+            .path-card { flex: 1; flex-direction: column; text-align: center; padding: 40px 20px; gap: 15px; } 
+        }
 
         .section-label { font-size: 1.05rem; font-weight: 800; color: var(--brand-red); text-transform: uppercase; margin-bottom: 15px; letter-spacing: 0.5px; border-bottom: 1px solid var(--border-color); padding-bottom: 8px;}
         
+        /* ALIGNMENT FIX FOR GRID INPUTS */
         .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; align-items: start; }
         .form-group { margin-bottom: 16px; display: flex; flex-direction: column; justify-content: flex-start; }
         .form-group label { display: block; font-weight: 700; margin-bottom: 6px; font-size: 0.8rem; color: #4B5563; text-transform: uppercase; }
@@ -161,20 +190,26 @@
         <div class="form-panel" id="formPanel">
             
             <!-- STEP 1: The Segmentation Gate -->
-            <div class="form-step" id="step-1">
-                <div class="section-label" style="text-align:center; border:none; margin-top:10px; color: var(--text-muted);">Welcome! Let's get started.</div>
-                <h3 style="text-align:center; margin-bottom:25px; font-weight:900; font-size: 1.5rem;">Which best describes you?</h3>
+            <div class="form-step step-1-wrapper" id="step-1">
+                <div class="welcome-header">
+                    <h2>Let's build your resume.</h2>
+                    <p>To get started, which best describes you?</p>
+                </div>
                 
                 <div class="path-selection-cards">
                     <div class="path-card" onclick="selectPath('fresh')">
                         <div class="path-icon">🎓</div>
-                        <div class="path-title">I am a Fresher / Student</div>
-                        <div class="path-desc">Looking for my first job or internship.</div>
+                        <div class="path-text">
+                            <div class="path-title">I am a Fresher / Student</div>
+                            <div class="path-desc">Looking for my first job or internship.</div>
+                        </div>
                     </div>
                     <div class="path-card" onclick="selectPath('exp')">
                         <div class="path-icon">💼</div>
-                        <div class="path-title">I have Work Experience</div>
-                        <div class="path-desc">I have worked in one or more professional roles.</div>
+                        <div class="path-text">
+                            <div class="path-title">I have Work Experience</div>
+                            <div class="path-desc">I have worked in one or more professional roles.</div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -406,22 +441,25 @@
             const expDropdown = document.getElementById('inpTotalExp');
             if (isFresher) {
                 expDropdown.value = "Fresher";
-                document.getElementById('totalExpGroup').style.display = 'none'; // Lock and hide to prevent contradiction
+                document.getElementById('totalExpGroup').style.display = 'none'; 
             } else {
                 if(expDropdown.value === "Fresher") expDropdown.value = "";
                 document.getElementById('totalExpGroup').style.display = 'flex';
             }
             
             updateResume();
-            nextStep(); // Automatically advance to Step 2!
+            nextStep(); // Auto-advance!
         }
 
         function updateStepUI() {
             document.querySelectorAll('.form-step').forEach((el, index) => {
-                el.style.display = (index + 1 === currentStep) ? 'block' : 'none';
+                if (index + 1 === currentStep) {
+                    el.style.display = (index === 0) ? 'flex' : 'block';
+                } else {
+                    el.style.display = 'none';
+                }
             });
             
-            // We adjust the step counter so the user sees "Step 1 of 6" starting at the personal details screen.
             const displayStep = currentStep - 1;
             const displayTotal = totalSteps - 1;
             
@@ -747,7 +785,7 @@
             document.getElementById('outSkillsList').innerHTML = compHTML;
             document.getElementById('secSkills').style.display = compHTML ? 'block' : 'none';
 
-            // 4. Experience 
+            // 4. Experience
             const expBlocks = document.querySelectorAll('.exp-block');
             let expHTML = '';
             expBlocks.forEach(block => {
@@ -756,18 +794,18 @@
                 const loc = block.querySelector('.e-loc').value;
                 const dates = block.querySelector('.e-dates').value;
                 
-                const bulletEngines = block.querySelectorAll('.bullet-engine');
+                const bulletEngines = document.querySelectorAll(`#${block.id} .bullet-engine`);
                 let bulletsHTML = '';
                 bulletEngines.forEach(be => {
-                    const act = be.querySelector('.b-action').value.trim();
+                    const act = be.querySelector('.b-action').value;
                     const tool = be.querySelector('.b-tool').value.trim();
                     const res = be.querySelector('.b-result').value.trim();
                     
-                    let combined = act;
+                    let combined = act || '';
                     if(tool) combined += ` ${tool}`;
                     if(res) combined += ` ${res}`;
                     
-                    if(combined) bulletsHTML += `<li>${combined}</li>`;
+                    if(combined.trim()) bulletsHTML += `<li>${combined.trim()}</li>`;
                 });
 
                 if (comp || title) {
